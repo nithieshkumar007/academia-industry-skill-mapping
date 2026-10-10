@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Academia–Industry Skill Bridge</title>
+<style>
+:root{--navy:#152746;--blue:#315efb;--pale:#eef3ff;--ink:#1e293b;--muted:#64748b;--line:#e2e8f0;--bg:#f7f9fc;--green:#13805b}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5}
+header{background:linear-gradient(120deg,#142544,#315efb);color:white;padding:26px 18px 30px}
+.wrap{max-width:1000px;margin:auto}header .brand{font-size:13px;letter-spacing:1.5px;text-transform:uppercase;opacity:.85;font-weight:bold}
+header h1{font-size:clamp(27px,6vw,42px);line-height:1.12;margin:12px 0}header p{max-width:650px;color:#e0e7ff;margin:0}
+nav{display:flex;gap:8px;overflow:auto;padding:12px 14px;background:white;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
+nav button{border:0;background:transparent;padding:10px 13px;border-radius:9px;font-weight:bold;color:var(--muted);white-space:nowrap;cursor:pointer}
+nav button.active,nav button:hover{background:var(--pale);color:var(--blue)}
+main{max-width:1000px;margin:22px auto;padding:0 14px 40px}.panel{display:none}.panel.active{display:block}
+h2{font-size:24px;margin:0 0 5px}.sub{color:var(--muted);margin:0 0 18px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.card,.form-card{background:white;border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:0 4px 14px #17255408}
+.card h3{margin:8px 0 5px;font-size:18px}.card p{color:var(--muted);margin:6px 0}.tag{display:inline-block;background:var(--pale);color:#294bd0;border-radius:20px;padding:4px 9px;font-size:12px;margin:4px 4px 0 0}
+.metric{font-size:28px;font-weight:800;color:var(--navy)}.label{font-size:13px;color:var(--muted)}
+form{display:grid;gap:12px}label{font-size:14px;font-weight:bold}input,select,textarea{display:block;width:100%;margin-top:5px;padding:12px;border:1px solid #cbd5e1;border-radius:9px;font:inherit;background:white;color:var(--ink)}textarea{min-height:88px;resize:vertical}
+.btn{border:0;background:var(--blue);color:white;padding:12px 16px;border-radius:9px;font-weight:bold;cursor:pointer}.btn.secondary{background:#eaf0ff;color:#2348d8}.btn.small{padding:8px 11px;font-size:13px}.notice{background:#effaf5;border:1px solid #b7ead1;color:#126344;padding:12px 14px;border-radius:10px;margin:14px 0}.empty{padding:18px;color:var(--muted);background:white;border:1px dashed #cbd5e1;border-radius:12px}
+.match{height:8px;background:#e8edf5;border-radius:10px;overflow:hidden;margin:10px 0}.match span{display:block;height:100%;background:linear-gradient(90deg,#315efb,#20b486)}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:24px;border-top:1px solid var(--line)}
+@media(min-width:700px){.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}}
+</style>
+</head>
+<body>
+<header><div class="wrap"><div class="brand">Student • College • Industry</div><h1>Academia–Industry<br>Skill Bridge</h1><p>A starter platform concept to help students understand in-demand skills and explore internship and placement opportunities.</p></div></header>
+<nav aria-label="Main navigation">
+<button class="active" data-tab="dashboard">Overview</button><button data-tab="skills">Skill Mapper</button><button data-tab="opportunities">Opportunities</button><button data-tab="profile">My Profile</button>
+</nav>
+<main>
+<section id="dashboard" class="panel active">
+<h2>Welcome to Skill Bridge</h2><p class="sub">A simple prototype connecting learning with career opportunities.</p>
+<div class="grid">
+<div class="card"><div class="metric" id="skillCount">0</div><div class="label">Skills in your profile</div></div>
+<div class="card"><div class="metric" id="oppCount">3</div><div class="label">Sample opportunities</div></div>
+<div class="card"><div class="metric">1</div><div class="label">Skill-mapping tool</div></div>
+</div>
+<div class="notice"><strong>Prototype note:</strong> Opportunity listings are examples for demonstration, not live vacancies. Profile data is saved only in this browser on this device.</div>
+<h2 style="margin-top:26px">How it works</h2>
+<div class="grid">
+<div class="card"><span class="tag">01 · Profile</span><h3>Add your skills</h3><p>List what you know and what you want to learn.</p><button class="btn secondary" onclick="showTab('profile')">Create profile</button></div>
+<div class="card"><span class="tag">02 · Compare</span><h3>Map skill gaps</h3><p>Compare your skills with a sample role and see what to improve.</p><button class="btn secondary" onclick="showTab('skills')">Map skills</button></div>
+<div class="card"><span class="tag">03 · Explore</span><h3>Find opportunities</h3><p>Review sample internship and entry-level role ideas.</p><button class="btn secondary" onclick="showTab('opportunities')">Explore roles</button></div>
+</div>
+</section>
+<section id="skills" class="panel">
+<h2>Skill Mapper</h2><p class="sub">Choose a career path to compare its sample skills with your profile.</p>
+<div class="form-card">
+<label for="role">Career path</label><select id="role"><option value="frontend">Frontend Developer</option><option value="python">Python Developer</option><option value="data">Data Analyst</option></select>
+<button class="btn" style="margin-top:12px" onclick="mapSkills()">Compare my skills</button>
+<div id="skillResults" style="margin-top:18px"><p class="sub">Your skill comparison will appear here.</p></div>
+</div>
+</section>
+<section id="opportunities" class="panel">
+<h2>Explore Opportunities</h2><p class="sub">Illustrative examples to show how opportunities could be presented.</p>
+<div class="grid">
+<div class="card"><span class="tag">Sample listing</span><h3>Frontend Development Intern</h3><p>Focus: HTML, CSS, JavaScript and responsive interfaces.</p><p><strong>Suggested for:</strong> Students building web projects.</p><span class="tag">Web Development</span><span class="tag">Internship</span></div>
+<div class="card"><span class="tag">Sample listing</span><h3>Python Developer Trainee</h3><p>Focus: Python basics, problem solving and simple applications.</p><p><strong>Suggested for:</strong> Students practising programming.</p><span class="tag">Python</span><span class="tag">Entry level</span></div>
+<div class="card"><span class="tag">Sample listing</span><h3>Data Analyst Intern</h3><p>Focus: spreadsheets, data cleaning, charts and basic SQL.</p><p><strong>Suggested for:</strong> Students interested in working with data.</p><span class="tag">Analytics</span><span class="tag">Internship</span></div>
+</div>
+</section>
+<section id="profile" class="panel">
+<h2>My Student Profile</h2><p class="sub">Enter a few details to personalize the skill comparison on this device.</p>
+<div class="form-card"><form id="profileForm">
+<label>Name (optional)<input id="studentName" placeholder="Your name"></label>
+<label>Course / department<input id="course" placeholder="e.g. Computer Science"></label>
+<label>Your current skills (comma-separated)<textarea id="skillsInput" placeholder="e.g. HTML, CSS, Python"></textarea></label>
+<label>Skills you want to learn (comma-separated)<textarea id="learningInput" placeholder="e.g. JavaScript, SQL"></textarea></label>
+<button class="btn" type="submit">Save profile on this device</button>
+</form><div id="profileMessage" aria-live="polite"></div></div>
+</section>
+</main>
+<footer>Academia–Industry Skill Bridge · Student hackathon prototype · Demo data only</footer>
+<script>
+const roles={
+ frontend:["HTML","CSS","JavaScript","Responsive Design","Git"],
+ python:["Python","Problem Solving","Functions","SQL","Git"],
+ data:["Spreadsheets","SQL","Data Cleaning","Data Visualization","Statistics"]
+};
+const $=id=>document.getElementById(id);
+function getProfile(){try{return JSON.parse(localStorage.getItem("skillBridgeProfile")||"{}")}catch(e){return {}}}
+function saveProfile(p){localStorage.setItem("skillBridgeProfile",JSON.stringify(p))}
+function list(value){return (value||"").split(",").map(x=>x.trim().toLowerCase()).filter(Boolean)}
+function showTab(id){document.querySelectorAll(".panel").forEach(p=>p.classList.toggle("active",p.id===id));document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("active",b.dataset.tab===id));if(id==="skills")mapSkills();window.scrollTo({top:0,behavior:"smooth"})}
+document.querySelectorAll("nav button").forEach(b=>b.addEventListener("click",()=>showTab(b.dataset.tab)));
+$("profileForm").addEventListener("submit",e=>{e.preventDefault();const p={name:$("studentName").value.trim(),course:$("course").value.trim(),skills:$("skillsInput").value,learning:$("learningInput").value};saveProfile(p);refresh();$("profileMessage").innerHTML='<div class="notice">Profile saved on this device.</div>';mapSkills()});
+function refresh(){const p=getProfile();$("studentName").value=p.name||"";$("course").value=p.course||"";$("skillsInput").value=p.skills||"";$("learningInput").value=p.learning||"";$("skillCount").textContent=list(p.skills).length}
+function mapSkills(){const p=getProfile(),have=list(p.skills),need=roles[$("role").value],matched=need.filter(s=>have.includes(s.toLowerCase())),missing=need.filter(s=>!have.includes(s.toLowerCase())),pct=Math.round(matched.length/need.length*100);let html='<div class="metric">'+pct+'% match</div><div class="match"><span style="width:'+pct+'%"></span></div><p>'+matched.length+' of '+need.length+' sample skills matched.</p>';html+='<h3>Skills you already listed</h3>';html+=matched.length?matched.map(s=>'<span class="tag">✓ '+s+'</span>').join(""):'<p class="sub">No exact matches yet. Add skills in My Profile.</p>';html+='<h3 style="margin-top:16px">Skills to practise next</h3>';html+=missing.map(s=>'<span class="tag">'+s+'</span>').join("");html+='<p class="label" style="margin-top:14px">This is a simple keyword comparison, not an employer assessment.</p>';$("skillResults").innerHTML=html}
+refresh();mapSkills();
+</script>
+</body>
+</html>
